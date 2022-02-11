@@ -60,14 +60,46 @@
 			children = (
 				E9AE9D1127B6E30A002E52E3 /* AppDelegate.swift */,
 				E9AE9D1327B6E30A002E52E3 /* SceneDelegate.swift */,
-				E9AE9D1527B6E30A002E52E3 /* ViewController.swift */,
+				E9AE9D2927B6E397002E52E3 /* Models */,
+				E9AE9D2B27B6E3CC002E52E3 /* ViewModels */,
+				E9AE9D2A27B6E3A7002E52E3 /* ViewControllers */,
 				E9AE9D1727B6E30A002E52E3 /* Main.storyboard */,
+				E9AE9D2827B6E379002E52E3 /* NetworkManager */,
 				E9AE9D1D27B6E30C002E52E3 /* Assets.xcassets */,
 				E9AE9D1F27B6E30C002E52E3 /* LaunchScreen.storyboard */,
 				E9AE9D2227B6E30C002E52E3 /* Info.plist */,
 				E9AE9D1A27B6E30A002E52E3 /* MoviesDBApp.xcdatamodeld */,
 			);
 			path = MoviesDBApp;
+			sourceTree = "<group>";
+		};
+		E9AE9D2827B6E379002E52E3 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		E9AE9D2927B6E397002E52E3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E9AE9D2A27B6E3A7002E52E3 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E9AE9D1527B6E30A002E52E3 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E9AE9D2B27B6E3CC002E52E3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,7 +342,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -338,7 +370,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

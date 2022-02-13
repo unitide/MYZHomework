@@ -11,6 +11,7 @@ import Combine
 class ViewModel {
     private  var networkManager = NetworkManager()
     @Published private(set) var moviesOverview = [MoviesOverview]()
+    @Published private(set) var movieDetail: MoviesOverview?
     
     func fetchMoviesData() {
         
@@ -35,8 +36,6 @@ class ViewModel {
                 print(error.localizedDescription)
             }
         }
-        
-
     }
     
     func fetchMoviesData(movieID: Int) {
@@ -44,13 +43,31 @@ class ViewModel {
         networkManager.getModel(MovieDetail.self, from: urlString) { result in
             switch result {
             case .success(let movie):
-                
+                if let row = self.findRowNumber(movieID: movieID, movies: self.moviesOverview) {
+                    for company in movie.productionCompanies {
+                        self.moviesOverview[row].productionCompaniesLogoPath?.append(company.logoPath)
+                        //MARK: download product company logo
+                        self.networkManager.getImageData(from: company.logoPath) { data in
+                            self.moviesOverview[row].ProductionCompaniesLogoImage?.append(data!)
+                        }
+                    }
+                    self.movieDetail = self.moviesOverview[row]
+                }
+                return
             case .failure(let error):
                 print(error.localizedDescription)
             }
             
+        }
     }
-    
+    func findRowNumber(movieID: Int, movies: [MoviesOverview]) -> Int? {
+        for (row,movie) in movies.enumerated() {
+            if movie.movieID == movieID {
+                return row
+            }
+        }
+        return nil
+    }
     func getMovieTitleByRow(row: Int) -> String {
          moviesOverview[row].title
     }

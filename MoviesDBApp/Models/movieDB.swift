@@ -61,6 +61,8 @@ struct MoviesOverview {
     let overview: String
     let posterImageLink: String
     var posterImage: Data?
+    var productionCompaniesLogoPath: [String]?
+    var ProductionCompaniesLogoImage: [Data]?
     
     init(movieID: Int, title: String,overview: String, posterImageLink: String) {
         self.movieID = movieID
@@ -68,5 +70,7 @@ struct MoviesOverview {
         self.overview = overview
         self.posterImageLink = posterImageLink
         self.posterImage = Data()
+        self.productionCompaniesLogoPath = [String]()
+        self.ProductionCompaniesLogoImage = [Data]()
     }
 }

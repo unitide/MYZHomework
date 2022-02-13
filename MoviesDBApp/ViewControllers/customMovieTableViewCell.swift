@@ -14,17 +14,30 @@ class customMovieTableViewCell: UITableViewCell {
     @IBOutlet weak var movieTitle: UILabel!
     
     @IBOutlet weak var movieOverview: UILabel!
+    @IBOutlet weak var showDetailButton: UIButton!
+    
+    var cellDelegate: ShowDetailPressedDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-   
+    @IBAction func showMovieDetail(_ sender: UIButton) {
+       
+        cellDelegate?.didPressButton(sender.tag)
+        
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
 
+}
+
+
+protocol ShowDetailPressedDelegate : AnyObject {
+    func didPressButton(_ tag: Int)
 }

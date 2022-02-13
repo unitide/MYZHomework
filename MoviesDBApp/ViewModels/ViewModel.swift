@@ -39,6 +39,18 @@ class ViewModel {
 
     }
     
+    func fetchMoviesData(movieID: Int) {
+        let urlString = NetworkURLs.baseMovieURL + "\(movieID)" + NetworkURLs.queryURLSuffix
+        networkManager.getModel(MovieDetail.self, from: urlString) { result in
+            switch result {
+            case .success(let movie):
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+    }
+    
     func getMovieTitleByRow(row: Int) -> String {
          moviesOverview[row].title
     }

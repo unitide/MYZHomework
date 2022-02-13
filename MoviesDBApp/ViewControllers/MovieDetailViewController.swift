@@ -8,17 +8,14 @@
 import UIKit
 
 class MovieDetailViewController: UIViewController {
-     var currentRow: Int?
+     var movieID: Int?
     private var vm = ViewModel()
 
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let _ = currentRow {
-            print(currentRow )
-        }
-
+      
         // Do any additional setup after loading the view.
     }
     

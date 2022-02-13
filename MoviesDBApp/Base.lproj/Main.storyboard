@@ -143,7 +143,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmm-X2-KCn">
-                                                    <rect key="frame" x="125" y="60" width="222" height="93"/>
+                                                    <rect key="frame" x="125" y="54" width="222" height="99"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -162,7 +162,7 @@
                                                         <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                                     </buttonConfiguration>
                                                     <connections>
-                                                        <segue destination="S3O-po-L2S" kind="show" identifier="detailLink" id="nex-0i-IiI"/>
+                                                        <action selector="showMovieDetail:" destination="HzX-Rq-1OZ" eventType="touchUpInside" id="Z9S-ba-x1Z"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -189,6 +189,7 @@
                                             <outlet property="movieImage" destination="2JA-EE-QAF" id="kGK-QB-ict"/>
                                             <outlet property="movieOverview" destination="fmm-X2-KCn" id="Zyl-KY-gY2"/>
                                             <outlet property="movieTitle" destination="oGm-C0-Aq6" id="rPf-dN-zhg"/>
+                                            <outlet property="showDetailButton" destination="YKW-35-HTi" id="8o6-jc-xYB"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -211,6 +212,7 @@
                         <outlet property="currentOption" destination="eJa-M2-CA6" id="N04-f5-Ofk"/>
                         <outlet property="moviesTableView" destination="dQA-k2-xuC" id="dv6-fq-8Fd"/>
                         <outlet property="nameItem" destination="ArD-iM-622" id="d1h-Mh-Mzp"/>
+                        <segue destination="S3O-po-L2S" kind="show" identifier="detailLink" id="yj9-0U-Jlc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rJY-ct-AaD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

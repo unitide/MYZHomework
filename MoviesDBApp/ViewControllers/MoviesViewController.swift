@@ -21,7 +21,7 @@ class MoviesViewController: UIViewController {
     private var vm = ViewModel()
     private var subscribers = Set<AnyCancellable>()
     
-    var currentRow: Int?
+    var movieID: Int?
     let cellIdentifer = "cellID"
     
     override func viewDidLoad() {
@@ -38,8 +38,8 @@ class MoviesViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let detailVC = segue.destination as! MovieDetailViewController
-        if let row = self.currentRow {
-            detailVC.currentRow = row
+        if let id = self.movieID {
+            detailVC.movieID = id
         }
         
     }
@@ -111,7 +111,7 @@ class MoviesViewController: UIViewController {
 
 extension MoviesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.currentRow = indexPath.row
+        
     }
 }
 
@@ -127,10 +127,19 @@ extension MoviesViewController: UITableViewDataSource {
        
         cell.movieTitle.text = vm.getMovieTitleByRow(row: row)
         cell.movieOverview.text = vm.getMovieOverviewByRow(row: row)
+        cell.showDetailButton.tag = vm.getMovieIDByRow(row: row)
         if let image = vm.getMoviePosterImageByRow(row: row) {
             cell.movieImage.image = UIImage(data: image)
         }
+        cell.cellDelegate = self
         
         return cell
+    }
+}
+
+extension MoviesViewController: ShowDetailPressedDelegate {
+    func didPressButton(_ tag: Int) {
+        self.movieID = tag
+        performSegue(withIdentifier: "detailLink", sender: self)
     }
 }

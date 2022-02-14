@@ -10,7 +10,7 @@ import Combine
 
 class MovieDetailViewController: UIViewController {
     var movieID: Int?
-    private var vm = ViewModel()
+    var vm: ViewModel?
     private var movieDetail: MoviesOverview?
     private var subscribers = Set<AnyCancellable>()
 
@@ -30,24 +30,27 @@ class MovieDetailViewController: UIViewController {
     }
     
     private func setupBinding() {
-        vm
-        .$moviesOverview
-        .receive(on: RunLoop.main)
-        .sink { [weak self] _ in
-                self?.movieDetail
-            self?.displayMovieDetail()
+        if let vm = vm {
+            vm
+            .$moviesOverview
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                   // self?.movieDetail
+                self?.displayMovieDetail()
+                }
+            .store(in: &subscribers)
+            
+            if self.movieID != nil {
+              vm.fetchMoviesData(movieID: self.movieID!)
             }
-        .store(in: &subscribers)
-        
-        if self.movieID != nil {
-          vm.fetchMoviesData(movieID: self.movieID!)
         }
     }
     
     func displayMovieDetail() {
-        titleLabel.text = movieDetail?.title
-        overviewLabel.text = movieDetail?.overview
-        if let image = movieDetail?.posterImage {
+        let movie = vm?.getChosenMovie()
+        titleLabel.text = movie!.title
+        overviewLabel.text = movie!.overview
+        if let image = movie!.posterImage {
             posterImAGE.image = UIImage(data: image)
         }
         

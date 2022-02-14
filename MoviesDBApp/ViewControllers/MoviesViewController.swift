@@ -40,6 +40,7 @@ class MoviesViewController: UIViewController {
         let detailVC = segue.destination as! MovieDetailViewController
         if let id = self.movieID {
             detailVC.movieID = id
+            detailVC.vm = vm
         }
         
     }

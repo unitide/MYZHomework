@@ -38,8 +38,10 @@ class ViewModel {
         }
     }
     
+    
     func fetchMoviesData(movieID: Int) {
         let urlString = NetworkURLs.baseMovieURL + "\(movieID)" + NetworkURLs.queryURLSuffix
+        
         networkManager.getModel(MovieDetail.self, from: urlString) { result in
             switch result {
             case .success(let movie):
@@ -47,11 +49,15 @@ class ViewModel {
                     for company in movie.productionCompanies {
                         self.moviesOverview[row].productionCompaniesLogoPath?.append(company.logoPath)
                         //MARK: download product company logo
-                        self.networkManager.getImageData(from: company.logoPath) { data in
-                            self.moviesOverview[row].ProductionCompaniesLogoImage?.append(data!)
+                        self.networkManager.getImageData(from: NetworkURLs.baseImageURL+company.logoPath) { data in
+                            if let data = data {
+                                self.moviesOverview[row].ProductionCompaniesLogoImage?.append(data)
+                            }
                         }
                     }
+                   
                     self.movieDetail = self.moviesOverview[row]
+                   
                 }
                 return
             case .failure(let error):
@@ -86,6 +92,12 @@ class ViewModel {
     
     func getTotalMovies() -> Int  {
         moviesOverview.count
+    }
+    func getChosenMovie() -> MoviesOverview? {
+        if let movie = self.movieDetail {
+            return movie
+        }
+        return nil
     }
 }
 

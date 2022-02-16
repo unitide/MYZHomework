@@ -52,12 +52,14 @@ class ViewModel {
                         self.networkManager.getImageData(from: NetworkURLs.baseImageURL+company.logoPath) { data in
                             if let data = data {
                                 self.moviesOverview[row].ProductionCompaniesLogoImage?.append(data)
+                                print("Companies logo downloaded! Movie id \(movieID) row is \(row)")
                             }
+                            self.movieDetail = self.moviesOverview[row]
                         }
                     }
                    
                     self.movieDetail = self.moviesOverview[row]
-                   
+                  
                 }
                 return
             case .failure(let error):
@@ -98,6 +100,13 @@ class ViewModel {
             return movie
         }
         return nil
+    }
+    
+    func getChosenMovieProductionLogo() -> [Data]? {
+        if let data = self.movieDetail?.ProductionCompaniesLogoImage {
+            return data
+        }
+     return nil
     }
 }
 

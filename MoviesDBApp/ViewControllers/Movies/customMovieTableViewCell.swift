@@ -26,6 +26,7 @@ class customMovieTableViewCell: UITableViewCell {
     @IBAction func showMovieDetail(_ sender: UIButton) {
        
         cellDelegate?.didPressButton(sender.tag)
+        print("the movie ID is \(sender.tag)")
         
     }
     

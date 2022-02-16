@@ -29,6 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
             } else {
                 let vc = storyboard.instantiateViewController(withIdentifier: "NavigationController")
+//                let vc = storyboard.instantiateViewController(withIdentifier: "NaviCollectionViewController")
                 self.window?.rootViewController = vc
             }
             

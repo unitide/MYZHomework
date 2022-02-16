@@ -23,7 +23,7 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.backButtonTitle = "Movies"
         setupBinding()
       
         // Do any additional setup after loading the view.
@@ -47,13 +47,13 @@ class MovieDetailViewController: UIViewController {
     }
     
     func displayMovieDetail() {
-        let movie = vm?.getChosenMovie()
-        titleLabel.text = movie!.title
-        overviewLabel.text = movie!.overview
-        if let image = movie!.posterImage {
-            posterImAGE.image = UIImage(data: image)
+        if let movie = vm?.getChosenMovie() {
+            titleLabel.text = movie.title
+            overviewLabel.text = movie.overview
+            if let image = movie.posterImage {
+                posterImAGE.image = UIImage(data: image)
+            }
         }
-        
         
     }
 

@@ -23,6 +23,7 @@
 		E9AE9D3527B70976002E52E3 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AE9D3427B70976002E52E3 /* NetworkError.swift */; };
 		E9AE9D3727B70999002E52E3 /* NetworkURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AE9D3627B70999002E52E3 /* NetworkURL.swift */; };
 		E9AE9D3927B74AD5002E52E3 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AE9D3827B74AD5002E52E3 /* MovieDetail.swift */; };
+		E9B84AA527BBDA0900809A9E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B84AA427BBDA0900809A9E /* CollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		E9AE9D3427B70976002E52E3 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		E9AE9D3627B70999002E52E3 /* NetworkURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkURL.swift; sourceTree = "<group>"; };
 		E9AE9D3827B74AD5002E52E3 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
+		E9B84AA427BBDA0900809A9E /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 		E9AE9D2A27B6E3A7002E52E3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E9B84AA427BBDA0900809A9E /* CollectionViewController.swift */,
 				E9AE9D1527B6E30A002E52E3 /* ViewController.swift */,
 				E982268127B8886F0080B2B2 /* MovieDetailViewController.swift */,
 				E9AE9D2C27B6EF84002E52E3 /* MoviesViewController.swift */,
@@ -204,6 +207,7 @@
 				E9AE9D2F27B7043F002E52E3 /* customMovieTableViewCell.swift in Sources */,
 				E9AE9D2D27B6EF84002E52E3 /* MoviesViewController.swift in Sources */,
 				E9AE9D1227B6E30A002E52E3 /* AppDelegate.swift in Sources */,
+				E9B84AA527BBDA0900809A9E /* CollectionViewController.swift in Sources */,
 				E982268227B8886F0080B2B2 /* MovieDetailViewController.swift in Sources */,
 				E9AE9D3727B70999002E52E3 /* NetworkURL.swift in Sources */,
 				E9AE9D3327B70961002E52E3 /* NetworkManager.swift in Sources */,

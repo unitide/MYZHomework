@@ -56,7 +56,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
 //        self.overview = overview
         
         let image = UIImageView()
-        image.contentMode = .scaleAspectFit
+       // image.contentMode = .scaleAspectFill
 //        image.frame.size.width = 400
 //        image.frame.size.width = 400
         

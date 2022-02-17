@@ -51,7 +51,7 @@ class MovieDetailViewController: UIViewController {
             var itemsPerRow: Int
             
             if sectionIndex == Section.ProductCompanies.rawValue {
-                itemsPerRow = 2
+                itemsPerRow = 1
             } else {
                 itemsPerRow = 1
            //  itemsPerRow = sectionIndex + 3
@@ -63,19 +63,49 @@ class MovieDetailViewController: UIViewController {
             let inset: CGFloat = 2.5
             
             // Item
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .fractionalHeight(1))
+            let heightFraction: Double
+            
+            switch sectionIndex {
+            case Section.Title.rawValue:
+                heightFraction = 0.3
+               
+            case Section.Overview.rawValue:
+                heightFraction = 0.9
+                
+            case Section.Poster.rawValue:
+                heightFraction = 1
+                
+            case Section.ProductCompanyLabel.rawValue:
+                heightFraction = 0.4
+                
+            case Section.ProductCompanies.rawValue:
+                heightFraction = 0.6
+                
+            case Section.Favorite.rawValue:
+                heightFraction = 0.2
+                
+            default:
+                heightFraction = 1
+                
+            }
+            
+//            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .fractionalHeight(1))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .fractionalHeight(heightFraction))
+
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
             
             // Group
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(fraction))
+//            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(fraction))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(heightFraction))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+          //   group.interItemSpacing = .fixed(2)
             
             // Section
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
             
-            let  vSpace = CGFloat(30)
+            let  vSpace = CGFloat(10)
             section.interGroupSpacing = vSpace
            
             
@@ -93,10 +123,14 @@ class MovieDetailViewController: UIViewController {
             return section
         })
 
+        
+       
+        
         // Create collection view with list layout
         collecView = UICollectionView(frame: view.bounds, collectionViewLayout: compositionalLayout)
         view.addSubview(collecView)
 
+        
         
         // Make collection view take up the entire view
         collecView.translatesAutoresizingMaskIntoConstraints = false
@@ -189,6 +223,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                 cell.label.text   = movie.title
                 cell.label.numberOfLines = 0
                 cell.label.textAlignment = .center
+                cell.backgroundColor = .yellow
                 cell.label.textColor = .red
               //  cell.label.font.withSize(30)
                 cell.label.font = UIFont.boldSystemFont(ofSize: 24)
@@ -200,6 +235,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             if let movie = vm?.getChosenMovie() {
                 cell.label.text = movie.overview
                 cell.label.numberOfLines = 0
+              //  cell.backgroundColor = .blue
                 cell.label.textAlignment = .left
            //     cell.label.textColor = .red
                 cell.label.font.withSize(14)
@@ -216,6 +252,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                     cell.image.image = UIImage(data: image)
                 }
             }
+            cell.image.contentMode = .scaleAspectFit
             return cell
 
             
@@ -226,8 +263,9 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                 cell.label.text   = "Product Companies"
                 cell.label.numberOfLines = 0
                 cell.label.textAlignment = .left
+                cell.backgroundColor = .yellow
                 cell.label.textColor = .red
-                cell.label.font.withSize(20)
+                cell.label.font.withSize(24)
             
             return cell
 
@@ -240,6 +278,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                 cell.image.image = UIImage(data: data[indexPath.row])
             
             }
+            cell.image.contentMode = .scaleAspectFit
             
             return cell
 
@@ -262,3 +301,5 @@ extension MovieDetailViewController: UICollectionViewDataSource {
     }
 
 }
+
+

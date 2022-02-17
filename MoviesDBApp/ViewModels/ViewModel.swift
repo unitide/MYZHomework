@@ -46,21 +46,25 @@ class ViewModel {
             switch result {
             case .success(let movie):
                 if let row = self.findRowNumber(movieID: movieID, movies: self.moviesOverview) {
-                    for company in movie.productionCompanies {
-                        self.moviesOverview[row].productionCompaniesLogoPath?.append(company.logoPath)
-                        //MARK: download product company logo
-                        self.networkManager.getImageData(from: NetworkURLs.baseImageURL+company.logoPath) { data in
-                            if let data = data {
-                                self.moviesOverview[row].ProductionCompaniesLogoImage?.append(data)
-                                print("Companies logo downloaded! Movie id \(movieID) row is \(row)")
+                    if let productionCompanies = movie.productionCompanies {
+                        for company in productionCompanies {
+                            if let logo_path = company.logoPath {
+                                self.moviesOverview[row].productionCompaniesLogoPath?.append(logo_path)
+                                //MARK: download product company logo
+                                self.networkManager.getImageData(from: NetworkURLs.baseImageURL+logo_path) { data in
+                                    if let data = data {
+                                        self.moviesOverview[row].ProductionCompaniesLogoImage?.append(data)
+                                        print("Companies logo downloaded! Movie id \(movieID) row is \(row)")
+                                    }
+                                    self.movieDetail = self.moviesOverview[row]
+                                }
                             }
-                            self.movieDetail = self.moviesOverview[row]
                         }
                     }
-                   
                     self.movieDetail = self.moviesOverview[row]
-                  
+                  print("row number \(row)  movie id \(movieID)")
                 }
+                print("I didn't find the Movie with id \(movieID)")
                 return
             case .failure(let error):
                 print(error.localizedDescription)

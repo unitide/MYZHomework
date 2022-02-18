@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E91450C227BD48F400BEDD0C /* TextCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91450C127BD48F400BEDD0C /* TextCollectionViewCell.swift */; };
-		E91450C427BD8D1A00BEDD0C /* ResizeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91450C327BD8D1A00BEDD0C /* ResizeItem.swift */; };
 		E982267C27B852D00080B2B2 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E982267B27B852D00080B2B2 /* ViewModel.swift */; };
 		E982268227B8886F0080B2B2 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E982268127B8886F0080B2B2 /* MovieDetailViewController.swift */; };
 		E9AE9D1227B6E30A002E52E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AE9D1127B6E30A002E52E3 /* AppDelegate.swift */; };
@@ -32,7 +31,6 @@
 
 /* Begin PBXFileReference section */
 		E91450C127BD48F400BEDD0C /* TextCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCollectionViewCell.swift; sourceTree = "<group>"; };
-		E91450C327BD8D1A00BEDD0C /* ResizeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeItem.swift; sourceTree = "<group>"; };
 		E982267B27B852D00080B2B2 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		E982268127B8886F0080B2B2 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		E9AE9D0E27B6E30A002E52E3 /* MoviesDBApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviesDBApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,7 +144,6 @@
 				E91450C127BD48F400BEDD0C /* TextCollectionViewCell.swift */,
 				E9B84AD327BC869900809A9E /* FavoriteCollectionViewCell.swift */,
 				E982268127B8886F0080B2B2 /* MovieDetailViewController.swift */,
-				E91450C327BD8D1A00BEDD0C /* ResizeItem.swift */,
 			);
 			path = ShowDetail;
 			sourceTree = "<group>";
@@ -233,7 +230,6 @@
 			files = (
 				E9AE9D1627B6E30A002E52E3 /* ViewController.swift in Sources */,
 				E9AE9D2F27B7043F002E52E3 /* customMovieTableViewCell.swift in Sources */,
-				E91450C427BD8D1A00BEDD0C /* ResizeItem.swift in Sources */,
 				E9AE9D2D27B6EF84002E52E3 /* MoviesViewController.swift in Sources */,
 				E9AE9D1227B6E30A002E52E3 /* AppDelegate.swift in Sources */,
 				E9B84AD427BC869900809A9E /* FavoriteCollectionViewCell.swift in Sources */,

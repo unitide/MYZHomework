@@ -227,7 +227,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WY3-fc-ddl">
-                                <rect key="frame" x="16" y="379" width="354" height="422"/>
+                                <rect key="frame" x="16" y="191" width="354" height="610"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <collectionViewLayout key="collectionViewLayout" id="klV-Q6-HKJ"/>
@@ -290,7 +290,7 @@
                         <viewLayoutGuide key="safeArea" id="CY5-ux-P74"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="u2g-O0-E1g"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="u2g-O0-E1g"/>
                     <connections>
                         <outlet property="collecView" destination="WY3-fc-ddl" id="tLz-9L-4QX"/>
                     </connections>

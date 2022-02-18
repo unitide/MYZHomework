@@ -9,9 +9,12 @@ import UIKit
 import Combine
 
 class ViewModel {
+    
     private  var networkManager = NetworkManager()
     @Published private(set) var moviesOverview = [MoviesOverview]()
     @Published private(set) var movieDetail: MoviesOverview?
+    
+    private var favoriteMovies = [Int:MoviesOverview]()
     
     func fetchMoviesData() {
         
@@ -80,6 +83,7 @@ class ViewModel {
         }
         return nil
     }
+    
     func getMovieTitleByRow(row: Int) -> String {
          moviesOverview[row].title
     }
@@ -99,6 +103,7 @@ class ViewModel {
     func getTotalMovies() -> Int  {
         moviesOverview.count
     }
+    
     func getChosenMovie() -> MoviesOverview? {
         if let movie = self.movieDetail {
             return movie
@@ -111,6 +116,24 @@ class ViewModel {
             return data
         }
      return nil
+    }
+    
+    func getMovieDetailFavoriteStatus() -> Bool? {
+        
+        return self.movieDetail?.favorite
+    }
+    
+    func setMovieDetailFavoriteStatus(status: Bool)  {
+         self.movieDetail?.favorite =  status
+        if status {
+            if let movieID = self.movieDetail?.movieID {
+                favoriteMovies[movieID] = self.movieDetail
+            }
+        } else {
+            if let movieID = self.movieDetail?.movieID {
+                favoriteMovies[movieID] = nil
+            }
+        }
     }
 }
 

@@ -9,12 +9,13 @@ import UIKit
 import Combine
 
 enum Section: Int {
-    case Title  = 0
-    case Overview
+    case Title = 0
+    case Overview 
     case Poster
     case ProductCompanyLabel
     case ProductCompanies
     case Favorite
+    
     
 }
 
@@ -31,7 +32,7 @@ class MovieDetailViewController: UIViewController {
     let favoriteCell = "favoriteCell"
     
     
-  
+
     
     
     override func viewDidLoad() {
@@ -82,7 +83,7 @@ class MovieDetailViewController: UIViewController {
                 heightFraction = 0.6
                 
             case Section.Favorite.rawValue:
-                heightFraction = 0.2
+                heightFraction = 0.5
                 
             default:
                 heightFraction = 1
@@ -152,6 +153,10 @@ class MovieDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+       // collecView.
+    }
+    
     private func setupBinding() {
         if let vm = vm {
             vm
@@ -168,31 +173,13 @@ class MovieDetailViewController: UIViewController {
             }
         }
     }
-    
-//    func displayMovieDetail() {
-//        if let movie = vm?.getChosenMovie() {
-//            titleLabel.text = movie.title
-//            overviewLabel.text = movie.overview
-//            if let image = movie.posterImage {
-//                posterImAGE.image = UIImage(data: image)
-//            }
-//        }
-        
-//    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
 extension MovieDetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+       return
+    }
 
 }
 
@@ -221,13 +208,17 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.textCell, for: indexPath) as! TextCollectionViewCell
             if let movie = vm?.getChosenMovie() {
                 cell.label.text   = movie.title
+                self.navigationItem.title = movie.title
+              
+           
                 cell.label.numberOfLines = 0
                 cell.label.textAlignment = .center
                 cell.backgroundColor = .yellow
                 cell.label.textColor = .red
               //  cell.label.font.withSize(30)
-                cell.label.font = UIFont.boldSystemFont(ofSize: 24)
+                cell.label.font = UIFont.boldSystemFont(ofSize: 20)
             }
+           
             return cell
             
         case Section.Overview.rawValue:
@@ -235,9 +226,9 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             if let movie = vm?.getChosenMovie() {
                 cell.label.text = movie.overview
                 cell.label.numberOfLines = 0
-              //  cell.backgroundColor = .blue
+                cell.backgroundColor = .gray
                 cell.label.textAlignment = .left
-           //     cell.label.textColor = .red
+                
                 cell.label.font.withSize(14)
             }
             return cell
@@ -265,7 +256,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                 cell.label.textAlignment = .left
                 cell.backgroundColor = .yellow
                 cell.label.textColor = .red
-                cell.label.font.withSize(24)
+                cell.label.font.withSize(26)
             
             return cell
 
@@ -285,6 +276,8 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             
         case Section.Favorite.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.favoriteCell, for: indexPath) as! FavoriteCollectionViewCell
+            cell.backgroundColor = .cyan
+            cell.delegate = self
             return cell
 
             
@@ -302,4 +295,9 @@ extension MovieDetailViewController: UICollectionViewDataSource {
 
 }
 
-
+//MARK: the protocol to get the status when user clicks the favorite switch 
+extension MovieDetailViewController: MoviesFavoriteStatusProtocol {
+    func setMoviesFavoriteStatus(status: Bool) {
+        self.vm?.setMovieDetailFavoriteStatus(status: status)
+    }
+}

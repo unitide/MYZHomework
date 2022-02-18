@@ -34,6 +34,9 @@ class MoviesViewController: UIViewController {
         setupBinding()
         moviesTableView.reloadData()
         // Do any additional setup after loading the view.
+        
+        self.navigationItem.backButtonTitle = "Movies"
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

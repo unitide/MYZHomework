@@ -7,9 +7,9 @@
 
 import UIKit
 
-//class TextCollectionViewCell: UICollectionViewCell {
+class TextCollectionViewCell: UICollectionViewCell {
 
-class TextCollectionViewCell: FullWidthCollectionViewCell {
+//class TextCollectionViewCell: FullWidthCollectionViewCell {
      weak var label: UILabel!
     
     override init (frame: CGRect){

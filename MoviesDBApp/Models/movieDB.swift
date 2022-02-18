@@ -63,6 +63,7 @@ struct MoviesOverview {
     var posterImage: Data?
     var productionCompaniesLogoPath: [String]?
     var ProductionCompaniesLogoImage: [Data]?
+    var favorite: Bool?
     
     init(movieID: Int, title: String,overview: String, posterImageLink: String) {
         self.movieID = movieID

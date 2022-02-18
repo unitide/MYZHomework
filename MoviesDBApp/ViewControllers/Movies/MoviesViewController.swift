@@ -24,6 +24,7 @@ class MoviesViewController: UIViewController {
     var movieID: Int?
     let cellIdentifer = "cellID"
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,6 +62,22 @@ class MoviesViewController: UIViewController {
         vm.fetchMoviesData()
         
     }
+    
+    @IBAction func optionSegmentClicked(_ sender: UISegmentedControl) {
+        switch currentOption.selectedSegmentIndex {
+        case 0:
+            vm.displayMovies(userOption: UserOptions.FromNetork)
+            self.moviesTableView.reloadData()
+        case 1:
+            vm.displayMovies(userOption: UserOptions.FromFavorite)
+            self.moviesTableView.reloadData()
+        default:
+            print("No other opiton!")
+        }
+    }
+    
+    
+   
 
     @IBAction func changeName(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "Change Name", message: "Enter your name", preferredStyle: .alert)
@@ -100,6 +117,7 @@ class MoviesViewController: UIViewController {
         }
     }
     
+   
     
     /*
     // MARK: - Navigation

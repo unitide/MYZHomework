@@ -8,6 +8,12 @@
 import UIKit
 import Combine
 
+enum UserOptions: Int {
+    case FromNetork = 0
+    case FromFavorite
+    case FromSearch
+}
+
 class ViewModel {
     
     private  var networkManager = NetworkManager()
@@ -15,6 +21,7 @@ class ViewModel {
     @Published private(set) var movieDetail: MoviesOverview?
     
     private var favoriteMovies = [Int:MoviesOverview]()
+    private var moviesOverviewFromNetork = [MoviesOverview]()
     
     func fetchMoviesData() {
         
@@ -24,6 +31,7 @@ class ViewModel {
                 for movie in movies.results {
                     let mo = MoviesOverview(movieID: movie.id, title: movie.title, overview: movie.overview,posterImageLink: movie.posterPath)
                     self.moviesOverview.append(mo)
+                    self.moviesOverviewFromNetork.append(mo)
 
                 }
                 // MARK: down poster image
@@ -31,6 +39,7 @@ class ViewModel {
                     let imageURL = NetworkURLs.baseImageURL + movie.posterImageLink
                     self.networkManager.getImageData(from: imageURL) { data in
                         self.moviesOverview[index].posterImage = data
+                        self.moviesOverviewFromNetork[index].posterImage = data
                     }
 
                 }
@@ -53,10 +62,13 @@ class ViewModel {
                         for company in productionCompanies {
                             if let logo_path = company.logoPath {
                                 self.moviesOverview[row].productionCompaniesLogoPath?.append(logo_path)
+                                self.moviesOverviewFromNetork[row].productionCompaniesLogoPath?.append(logo_path)
+                                
                                 //MARK: download product company logo
                                 self.networkManager.getImageData(from: NetworkURLs.baseImageURL+logo_path) { data in
                                     if let data = data {
                                         self.moviesOverview[row].ProductionCompaniesLogoImage?.append(data)
+                                        self.moviesOverviewFromNetork[row].ProductionCompaniesLogoImage?.append(data)
                                         print("Companies logo downloaded! Movie id \(movieID) row is \(row)")
                                     }
                                     self.movieDetail = self.moviesOverview[row]
@@ -75,6 +87,24 @@ class ViewModel {
             
         }
     }
+    
+    func displayMovies(userOption: UserOptions) {
+        switch userOption {
+        case .FromNetork:
+            self.moviesOverview = self.moviesOverviewFromNetork.map{$0} as! [MoviesOverview]
+            
+        case .FromFavorite:
+            self.moviesOverview.removeAll()
+            for (_,movie) in self.favoriteMovies {
+                self.moviesOverview.append(movie)
+            }
+            
+        case .FromSearch:
+            print("for search result!!")
+        }
+        
+    }
+    
     func findRowNumber(movieID: Int, movies: [MoviesOverview]) -> Int? {
         for (row,movie) in movies.enumerated() {
             if movie.movieID == movieID {

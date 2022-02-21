@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CoreData
 
 enum UserOptions: Int {
     case FromNetork = 0
@@ -19,13 +20,26 @@ class ViewModel {
     private  var networkManager = NetworkManager()
     @Published private(set) var moviesOverview = [MoviesOverview]()
     @Published private(set) var movieDetail: MoviesOverview?
+   // var movieDetail = PassthroughSubject<MoviesOverview,Never>()
+    
+    private var currentPage = 1
+    
+    
     
     private var favoriteMovies = [Int:MoviesOverview]()
     private var moviesOverviewFromNetork = [MoviesOverview]()
     
-    func fetchMoviesData() {
+    
+    func loadMoviePage () {
+        fetchOnePageMoviesData(page: currentPage)
+        currentPage += 1
         
-        networkManager.getModel(MoviesDB.self, from: NetworkURLs.popularMovieURL) { result in
+    }
+    
+    
+    private func fetchOnePageMoviesData(page: Int) {
+        let popularMovieURL = NetworkURLs.popularMovieBaseURL + "\(page)" + NetworkURLs.APIKey
+        networkManager.getModel(MoviesDB.self, from: popularMovieURL) { result in
             switch result {
             case .success(let movies):
                 for movie in movies.results {
@@ -50,8 +64,8 @@ class ViewModel {
         }
     }
     
-    
-    func fetchMoviesData(movieID: Int) {
+   
+     func fetchMoviesData(movieID: Int) {
         let urlString = NetworkURLs.baseMovieURL + "\(movieID)" + NetworkURLs.queryURLSuffix
         
         networkManager.getModel(MovieDetail.self, from: urlString) { result in
@@ -88,10 +102,11 @@ class ViewModel {
         }
     }
     
-    func displayMovies(userOption: UserOptions) {
+   
+    func displayMovies(userOption: UserOptions,movie :String? = "") {
         switch userOption {
         case .FromNetork:
-            self.moviesOverview = self.moviesOverviewFromNetork.map{$0} as! [MoviesOverview]
+            self.moviesOverview = self.moviesOverviewFromNetork.map{$0}
             
         case .FromFavorite:
             self.moviesOverview.removeAll()
@@ -100,7 +115,19 @@ class ViewModel {
             }
             
         case .FromSearch:
-            print("for search result!!")
+            print("search come  \(movie ?? "no value")")
+            guard let movie = movie else {
+                print("I am here")
+                self.moviesOverview = self.moviesOverviewFromNetork.map{$0}
+                return
+            }
+            if movie.count == 0 {
+                self.moviesOverview = self.moviesOverviewFromNetork.map{$0}
+            } else {
+                self.moviesOverview = self.moviesOverviewFromNetork.compactMap{ $0.title.contains(movie) ? $0: nil }
+                
+                print("for search result!!")
+            }
         }
         
     }
@@ -149,8 +176,10 @@ class ViewModel {
     }
     
     func getMovieDetailFavoriteStatus() -> Bool? {
-        
-        return self.movieDetail?.favorite
+        if let movieID = self.movieDetail?.movieID {
+            return self.favoriteMovies[movieID]?.favorite
+        }
+        return false
     }
     
     func setMovieDetailFavoriteStatus(status: Bool)  {
@@ -165,5 +194,90 @@ class ViewModel {
             }
         }
     }
-}
 
+
+// MARK: The following code is favorite movies data management storing in the core data
+
+    private func deleteAllFavoriteMoiesFromCoreData () {
+        let request: NSFetchRequest = MovieOverviewDescption.fetchRequest()
+        let context = CoreDataManager.shared.mainContext
+        do {
+            let allFavoriteMovies = try context.fetch(request)
+            for movie in allFavoriteMovies {
+                context.delete(movie)
+            }
+            CoreDataManager.shared.saveContext()
+            
+        } catch {
+            print(error)
+        }
+        
+    }
+    
+    private func fetchAllFavoriteMovieDataFromCoreData() -> [Int:MoviesOverview] {
+        let request: NSFetchRequest = MovieOverviewDescption.fetchRequest()
+        let context = CoreDataManager.shared.mainContext
+        
+        var movies = [Int:MoviesOverview]()
+        
+        do {
+            let favoriteMovies = try context.fetch(request)
+            
+            for movie in favoriteMovies {
+          
+               
+                let movieID = movie.value(forKey: "moviesID") as! Int
+                let title = movie.value(forKey: "title") as! String
+                
+                 let overview = movie.value(forKey: "overview") as! String
+                 let posterImage = movie.value(forKey: "posterImage") as! Data
+                 let posterImageLink = movie.value(forKey: "posterImageLink") as! String
+                 let productionCompaniesLogoImage = movie.value(forKey: "productionCompaniesLogoImage") as! [Data]
+                 let productionCompaniesLogoPath = movie.value(forKey: "productionCompaniesLogoPath") as! [String]
+                 let favorite = movie.value(forKey: "favorite") as! Bool
+               
+                
+                movies[movieID] = MoviesOverview(movieID: movieID, title: title, overview: overview, posterImageLink: posterImageLink, posterImage: posterImage, productionCompaniesLogoPath: productionCompaniesLogoPath, ProductionCompaniesLogoImage: productionCompaniesLogoImage, favorite: favorite)
+            }
+            return movies
+        } catch let error {
+            print(error)
+        }
+        return movies
+    }
+
+    private func saveFavoriteMovieDataToCoreData(_ favoriteMovies: [Int:MoviesOverview]) {
+    
+        let context = CoreDataManager.shared.mainContext
+        
+        guard let description = NSEntityDescription.entity(forEntityName: "MovieOverviewDescption", in: context)
+        else { return }
+        
+        for (_,favoriteMovie) in favoriteMovies {
+            let movieForSave = MovieOverviewDescption(entity: description, insertInto: context)
+            movieForSave.moviesID = Int64(favoriteMovie.movieID)
+            movieForSave.title = favoriteMovie.title
+            movieForSave.overview = favoriteMovie.overview
+            movieForSave.posterImageLink = favoriteMovie.posterImageLink
+            movieForSave.posterImage = favoriteMovie.posterImage
+            movieForSave.productionCompaniesLogoPath = favoriteMovie.productionCompaniesLogoPath as NSArray?
+            movieForSave.productionCompaniesLogoImage = favoriteMovie.ProductionCompaniesLogoImage as NSArray?
+            movieForSave.favorite = favoriteMovie.favorite ?? false
+        }
+        CoreDataManager.shared.saveContext()
+    }
+    
+    func loadFavoriteMovies() {
+        self.favoriteMovies = fetchAllFavoriteMovieDataFromCoreData()
+     //   self.deleteAllFavoriteMoiesFromCoreData()
+    }
+    
+    func saveFavoriteMovies() {
+        saveFavoriteMovieDataToCoreData(self.favoriteMovies)
+    }
+    
+    
+    func showSearchResult(movie: String) {
+    
+    }
+}

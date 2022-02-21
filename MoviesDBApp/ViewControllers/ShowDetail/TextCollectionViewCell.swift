@@ -25,10 +25,9 @@ class TextCollectionViewCell: UICollectionViewCell {
     
     func setupCell() {
         let label = UILabel()
-//        label.textAlignment = .center
-//        label.textColor = .red
+
         label.numberOfLines = 0
-//        label.font.withSize(20)
+
         label.translatesAutoresizingMaskIntoConstraints = false
         
         self.contentView.addSubview(label)

@@ -17,12 +17,15 @@ class MoviesViewController: UIViewController {
     
     @IBOutlet private weak var moviesTableView: UITableView!
     
+    @IBOutlet weak var searchMovie: UISearchBar!
+    
    // private var movies: [MoviesOverview]?
     private var vm = ViewModel()
     private var subscribers = Set<AnyCancellable>()
     
-    var movieID: Int?
-    let cellIdentifer = "cellID"
+    private var movieID: Int?
+    private let cellIdentifer = "cellID"
+    private var searchEnded = true
     
     
     override func viewDidLoad() {
@@ -30,14 +33,18 @@ class MoviesViewController: UIViewController {
         
         moviesTableView.delegate = self
         moviesTableView.dataSource = self
+        searchMovie.delegate = self
     
         displayNameOnToolbar()
         setupBinding()
         moviesTableView.reloadData()
         // Do any additional setup after loading the view.
-        
+        vm.loadFavoriteMovies()
         self.navigationItem.backButtonTitle = "Movies"
         
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        vm.saveFavoriteMovies()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -59,7 +66,7 @@ class MoviesViewController: UIViewController {
             }
         .store(in: &subscribers)
         
-        vm.fetchMoviesData()
+        vm.loadMoviePage()
         
     }
     
@@ -135,6 +142,23 @@ extension MoviesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // need to pass your indexpath then it showing your indicator at bottom
+        tableView.addLoading(indexPath) {
+            // add your code here
+//            if let searchInput = self.searchMovie.text?.count {
+//                if searchInput >= 0 {
+//                    return
+//                }
+//            }
+            if  self.currentOption.selectedSegmentIndex == 0 && self.searchEnded {
+                self.vm.loadMoviePage()
+            }
+            // append Your array and reload your tableview
+            tableView.stopLoading() // stop your indicator
+        }
+    }
 }
 
 extension MoviesViewController: UITableViewDataSource {
@@ -163,5 +187,19 @@ extension MoviesViewController: ShowDetailPressedDelegate {
     func didPressButton(_ tag: Int) {
         self.movieID = tag
         performSegue(withIdentifier: "detailLink", sender: self)
+    }
+}
+
+extension MoviesViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let inputText = searchMovie.text
+        self.searchEnded = false
+        
+        vm.displayMovies(userOption: .FromSearch, movie: inputText)
+        moviesTableView.reloadData()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.searchEnded = true
     }
 }

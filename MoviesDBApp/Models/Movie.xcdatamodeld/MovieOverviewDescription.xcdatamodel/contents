@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="MovieOverviewDescption" representedClassName="MovieOverviewDescption" syncable="YES" codeGenerationType="class">
+        <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="moviesID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="overview" optional="YES" attributeType="String" minValueString="0"/>
+        <attribute name="posterImage" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <attribute name="posterImageLink" optional="YES" attributeType="String" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <attribute name="productionCompaniesLogoImage" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <attribute name="productionCompaniesLogoPath" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="MovieOverviewDescption" positionX="-27" positionY="18" width="128" height="149"/>
+    </elements>
+</model>

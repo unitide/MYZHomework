@@ -160,11 +160,11 @@ class MovieDetailViewController: UIViewController {
     private func setupBinding() {
         if let vm = vm {
             vm
-            .$moviesOverview
+            .$movieDetail
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                    // self?.movieDetail
-           //     self?.displayMovieDetail()
+                self?.collecView.reloadData()
                 }
             .store(in: &subscribers)
             
@@ -226,10 +226,11 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             if let movie = vm?.getChosenMovie() {
                 cell.label.text = movie.overview
                 cell.label.numberOfLines = 0
-                cell.backgroundColor = .gray
+                cell.backgroundColor = .lightGray
+                cell.label.textColor = .black
                 cell.label.textAlignment = .left
                 
-                cell.label.font.withSize(14)
+                cell.label.font.withSize(16)
             }
             return cell
             
@@ -255,8 +256,8 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                 cell.label.numberOfLines = 0
                 cell.label.textAlignment = .left
                 cell.backgroundColor = .yellow
-                cell.label.textColor = .red
-                cell.label.font.withSize(26)
+                cell.label.textColor = .black
+                cell.label.font.withSize(20)
             
             return cell
 
@@ -277,6 +278,9 @@ extension MovieDetailViewController: UICollectionViewDataSource {
         case Section.Favorite.rawValue:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.favoriteCell, for: indexPath) as! FavoriteCollectionViewCell
             cell.backgroundColor = .cyan
+            if let status = vm?.getMovieDetailFavoriteStatus() {
+                cell.favorite.setOn(status, animated: false)
+            }
             cell.delegate = self
             return cell
 

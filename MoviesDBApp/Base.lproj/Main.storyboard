@@ -104,13 +104,17 @@
                                             <action selector="optionSegmentClicked:" destination="SzI-Xy-Bwj" eventType="valueChanged" id="ohZ-AF-T7I"/>
                                         </connections>
                                     </segmentedControl>
-                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="FGL-Do-xHs">
+                                    <searchBar contentMode="redraw" placeholder="moive" showsSearchResultsButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FGL-Do-xHs">
                                         <rect key="frame" x="0.0" y="91" width="370" height="45"/>
                                         <color key="backgroundColor" systemColor="systemBrownColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="3cc-8a-dOU"/>
                                         </constraints>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                        <scopeButtonTitles>
+                                            <string>Title</string>
+                                            <string>Title</string>
+                                        </scopeButtonTitles>
                                     </searchBar>
                                 </subviews>
                                 <constraints>
@@ -214,6 +218,7 @@
                         <outlet property="currentOption" destination="eJa-M2-CA6" id="N04-f5-Ofk"/>
                         <outlet property="moviesTableView" destination="dQA-k2-xuC" id="dv6-fq-8Fd"/>
                         <outlet property="nameItem" destination="ArD-iM-622" id="d1h-Mh-Mzp"/>
+                        <outlet property="searchMovie" destination="FGL-Do-xHs" id="WAJ-jw-Tsj"/>
                         <segue destination="S3O-po-L2S" kind="show" identifier="detailLink" id="yj9-0U-Jlc"/>
                     </connections>
                 </viewController>

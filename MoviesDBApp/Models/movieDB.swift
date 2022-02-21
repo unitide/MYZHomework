@@ -74,4 +74,15 @@ struct MoviesOverview {
         self.productionCompaniesLogoPath = [String]()
         self.ProductionCompaniesLogoImage = [Data]()
     }
+    
+    init(movieID: Int, title: String,overview: String, posterImageLink: String, posterImage: Data?, productionCompaniesLogoPath: [String]? ,ProductionCompaniesLogoImage: [Data]?, favorite: Bool? ) {
+        self.movieID = movieID
+        self.title = title
+        self.overview = overview
+        self.posterImageLink = posterImageLink
+        self.posterImage = posterImage
+        self.productionCompaniesLogoPath = productionCompaniesLogoPath
+        self.ProductionCompaniesLogoImage = ProductionCompaniesLogoImage
+        self.favorite = favorite
+    }
 }

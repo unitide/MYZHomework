@@ -273,11 +273,8 @@ class ViewModel {
     }
     
     func saveFavoriteMovies() {
-        saveFavoriteMovieDataToCoreData(self.favoriteMovies)
+        self.deleteAllFavoriteMoiesFromCoreData()
+        self.saveFavoriteMovieDataToCoreData(self.favoriteMovies)
     }
     
-    
-    func showSearchResult(movie: String) {
-    
-    }
 }

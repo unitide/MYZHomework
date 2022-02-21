@@ -153,8 +153,9 @@ class MovieDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    
     override func viewWillDisappear(_ animated: Bool) {
-       // collecView.
+        vm?.saveFavoriteMovies()
     }
     
     private func setupBinding() {

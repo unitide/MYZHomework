@@ -44,13 +44,14 @@ class MoviesViewController: UIViewController {
         
     }
     override func viewWillDisappear(_ animated: Bool) {
-        vm.saveFavoriteMovies()
+      //  vm.saveFavoriteMovies()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.currentOption.selectedSegmentIndex = 0
         self.moviesTableView.reloadData()
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let detailVC = segue.destination as! MovieDetailViewController
         if let id = self.movieID {

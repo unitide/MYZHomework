@@ -115,7 +115,7 @@ class ViewModel {
             }
             
         case .FromSearch:
-            print("search come  \(movie ?? "no value")")
+           
             guard let movie = movie else {
                 print("I am here")
                 self.moviesOverview = self.moviesOverviewFromNetork.map{$0}
@@ -125,8 +125,6 @@ class ViewModel {
                 self.moviesOverview = self.moviesOverviewFromNetork.map{$0}
             } else {
                 self.moviesOverview = self.moviesOverviewFromNetork.compactMap{ $0.title.lowercased().contains(movie.lowercased()) ? $0: nil }
-                
-                print("for search result!!")
             }
         }
         

@@ -124,7 +124,7 @@ class ViewModel {
             if movie.count == 0 {
                 self.moviesOverview = self.moviesOverviewFromNetork.map{$0}
             } else {
-                self.moviesOverview = self.moviesOverviewFromNetork.compactMap{ $0.title.contains(movie) ? $0: nil }
+                self.moviesOverview = self.moviesOverviewFromNetork.compactMap{ $0.title.lowercased().contains(movie.lowercased()) ? $0: nil }
                 
                 print("for search result!!")
             }
